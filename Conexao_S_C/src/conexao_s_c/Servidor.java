@@ -21,14 +21,21 @@ public class Servidor {
         System.out.println("Porta 12345 aberta!");
 
         Socket cliente = servidor.accept();
+
+        //Objecto para tratar da conexão
+        TratamentoClass tratamento = new TratamentoClass(cliente);
+        
+        Thread t = new Thread(tratamento);
+        
+        t.start();
         
         System.out.println("Nova conexão com o cliente " + cliente.getInetAddress().getHostAddress());
-        
+
         Scanner s = new Scanner(cliente.getInputStream());
-        while(s.hasNextLine()){
+        while (s.hasNextLine()) {
             System.out.println(s.nextLine());
         }
-        
+
         s.close();
         servidor.close();
         cliente.close();
